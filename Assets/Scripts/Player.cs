@@ -17,6 +17,6 @@ public class Player : MonoBehaviour
     void OnMove(InputValue value)
     {
         input = value.Get<Vector2>();
-        Debug.Log(input);//test
+        Debug.Log(input);
     }
 }
