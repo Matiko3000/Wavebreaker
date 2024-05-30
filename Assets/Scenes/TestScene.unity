@@ -2444,6 +2444,7 @@ GameObject:
   - component: {fileID: 1013920132}
   - component: {fileID: 1013920129}
   - component: {fileID: 1013920128}
+  - component: {fileID: 1013920133}
   m_Layer: 8
   m_Name: EnemySlime
   m_TagString: Untagged
@@ -2569,7 +2570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5166ce35eb81b4695e6fdd92ef16ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1626368100}
+  target: {fileID: 1626368099}
   activateDistance: 50
   pathUpdateSeconds: 0.3
   speed: 30
@@ -2671,6 +2672,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.07968038, y: 2.0047994}
   m_EdgeRadius: 0
+--- !u!114 &1013920133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013920118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d496525129076da44abb79e35a5e4128, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dealDamageOnCollision: 1
+  damage: 10
+  knockbackForce: {x: 2, y: 3.5}
+  knockbackDuration: 0.8
 --- !u!1 &1045593170
 GameObject:
   m_ObjectHideFlags: 0
@@ -2874,7 +2891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAAAIIew2LdYugQIAADsFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVF1zojAU/StOnlcHBFH2bVet3Ye2Tu1OX3iJ5CIZQ8Lko2o7/vdNAgh1eSGc+3XuuTd8IcpVDbkWciMpeRIE0M8Rcmf0Y9QbH+GMD4Lv6Cd0Pu+U6NI5Ye/zijUVFg9dmBIVaEnzX/zAnHNgQcNpIWS1JgdYCqWVhQvMFFiTFNpFcwt9jdDZvsapC7nY03TuTp/2lAajqz3mwDXIgetsMk/ni0XSBgSTMEyTOAzjRRs4DifBbJ6k8TRaj4O5z2J4znBVA3Et9cmiqM0SRpNpYJ+wcee26dYzmDifXDBGVcsZ6UvtNdnVJUhwohCKrQSep1OkBHootWtnGPtSFAp0q4/ElxWVVskmKfotGnkrrI4NwQ/MjCuTxJ5Tk/PpP/M49OZCiuqxKxsGroQuaX58xZccKz2QfwivvvM2/ITZEe8ZvJfAn8VGCsOJNWppXKhRMF31n7fOliXkxx5vqN6Bpu5176Yd3EY2ul598+clo9Xe6x43wI4Jr7ZfEZB2Mn8sYb9Aqk1hUcfir4I3fBhuWmt4oFJpa2q75I7eXhjpXNHaa+a6MXopJAcPt6Rr4Jjpy9am0fcTvLMNyt5ZHrC7U23x1tZdlbsQD/f+QXBn2orTbViqFKcnUOWL0Yxy6Ek7w7PVaSk4bxZsqEkXtjOywPkg7GAo+b5aKCWzPEgWeBole0jjaFzsEzzbJ9EcCIRRnCK/e5TbPjHbNkRbeezUeJ+c2z3rfjWjjcS1X3Yi8WlDPysxJEh5IXa5BOAvTYobc5C2ir2WZE2oVWgHWlPuB46+MsREfgSS3WpmvtX1WUuc9VkyVNMPoR2SoaX/uWTIwbdl3kr4oHByxbtkV3T9B1BLAwQUAAAICAAACCHsP6KCJ20AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNdRUEovSizIKAaKGII4pZkpIHa0kmWKabKBmUWikbFZUqqlibFuWpJZommSmbF5akqqobGJpVIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAACCHsNi3WLoECAAA7BQAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAACCHsP6KCJ20AAAB4AAAACQAkAAAAAAAAAAAAAADOAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAIYDAAAAAA==
+    dataString: UEsDBBQAAAgIAAAIIezkKQ9cgAIAAD0FAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1z2jAQ/SuMzoWRbTCltxYI6SEJE9rJxRdhrbEGWfJIcoBk+O+VZBk71BfLb7/evl35EzGha8iNVBvF6JOkgH6MkDujb6Pe+AhncpBixz6g83lj1JTOiXifV2KYtHjkwrSswCiW/xQH7pyxBRvBCqmqNT3AUmqjLVwQrsGalDQuWljoc4TO9jVeuJCLPcVzd/qwpwUeXe0xB2FADVxnk3SexHE0W4SQMZ5gC81maRxCx9EkWcR4jtP1GM99mkbknFQ1UNdTny1JQpIomcTYPlHrLmzXwRNPnE8uOWc6kEbmUntRdnUJCpwqlBGrgSfqWJTADqUJH7fYl6LQYIJAilxWTFkp26Tol2z1rYg+tgTfCW9cmXTqObU5n/4zjyNvLpSsHruyEXYlTMny4yu55ESbgf5DeNXzjrxMJ8KPZM/hrQTxLDdKNoJao1GNC200xKv+89bZsoT82OMt1TuwqXvdu3Hj28RG16tv/rzkrNp73actsOPSq+13BJSdzG9L2G+QDiks6lj81fCHHIarFgwPTGljTaFL4ejtZaOcK1p7zVw3jVlKJcDDgXQNgnBz2do05n6Cd7ZB2TvLA3GXKhQPtu6u3IV4uPfH+M60lafbsHQpT0+gy5fGcCagJ+0Mz1anpRSiXbChJl3YrlEFyQdhh4bRr6uFFnSW4/Q7iZN0D4tpMi72KZnt02QOFKJkukB+95iwfRK+bYkGeezUhpoIu2jdz2a0UaT2204VOW3YRyWHDJko5C5XAOLlaw4Nypax95KuKbMS7cAYJvzE0WeGuMyPQLNbR5nvdX02imR9lgzV7F0ah2Ro6X8vGXLwbZu3Ct4ZnFzxLtkVXf8BUEsDBBQAAAgIAAAIIew/ooInbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM011FQSi9KLMgoBooYgjilmSkgdrSSZYppsoGZRaKRsVlSqqWJsW5aklmiaZKZsXlqSqqhsYmlUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAAAIIezkKQ9cgAIAAD0FAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAAIIew/ooInbQAAAHgAAAAJACQAAAAAAAAAAAAAAM0CAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAhQMAAAAA
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -3486,16 +3503,17 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1626368100}
+  - component: {fileID: 1626368106}
+  - component: {fileID: 1626368105}
   - component: {fileID: 1626368103}
   - component: {fileID: 1626368107}
   - component: {fileID: 1626368102}
   - component: {fileID: 1626368101}
+  - component: {fileID: 1626368108}
   - component: {fileID: 1626368104}
-  - component: {fileID: 1626368106}
-  - component: {fileID: 1626368105}
   m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3623,6 +3641,9 @@ MonoBehaviour:
   jumpForce: 17
   jumpAmount: 1
   fallingScale: 0.4
+  knockBackInterness: 0.5
+  knockbackForce: {x: 2, y: 4}
+  knockbackDuration: 0.25
 --- !u!212 &1626368105
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3741,6 +3762,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.89379096, y: 0.21866572}
   m_EdgeRadius: 0
+--- !u!114 &1626368108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626368099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c2128ecfff26b4c9ae79043fcf6b25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 50
+  onDamageColor: {r: 0.7924528, g: 0.3999644, b: 0.3999644, a: 1}
+  colorDuration: 0.2
+  isAlive: 0
+  health: 0
 --- !u!1 &1706847407
 GameObject:
   m_ObjectHideFlags: 0

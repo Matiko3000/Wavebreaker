@@ -5,13 +5,19 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    [Header("Movement")]
     [SerializeField] float moveSpeed = 2f;
     [SerializeField] float jumpForce = 10f;
     [SerializeField] int jumpAmount = 1;
     [SerializeField] float fallingScale = 1;
 
+    [Header("Knockback")]
+    [SerializeField] Vector2 knockbackForce = new Vector2(1, 2);
+    [SerializeField] float knockbackDuration = 0.5f;
+
     private Vector2 input;
     private int currentJumps = 0;
+    bool isKnockedBack = false;
 
     BoxCollider2D groundCheck;
     Rigidbody2D rb;
@@ -39,13 +45,13 @@ public class Player : MonoBehaviour
 
     void moveHorizontally()//physically move and animate
     {
-        rb.velocity = new Vector2(input.x * moveSpeed, rb.velocity.y);
+        if (!isKnockedBack) rb.velocity = new Vector2(input.x * moveSpeed, rb.velocity.y);
 
         if (Mathf.Abs(input.x) > Mathf.Epsilon)
         {
             animator.SetBool("isRunning", true);
-            if (input.x < 0) transform.rotation = Quaternion.Euler(0,180,0); //flipping the sprite based on the direction
-            else transform.rotation = Quaternion.Euler(0,0,0);
+            if (input.x < 0) transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);//flipping the sprite based on the direction
+            else transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
         else animator.SetBool("isRunning", false);
     }
@@ -84,5 +90,22 @@ public class Player : MonoBehaviour
         }
     }
 
+    #endregion
+    #region knockback
+    public void ApplyKnockback()
+    {
+        StartCoroutine(KnockbackCoroutine(new Vector2(knockbackForce.x * Mathf.Sign(rb.velocity.x), knockbackForce.y), knockbackDuration));//use Coroutine so that player cant fully counter the knockback
+    }
+
+    private IEnumerator KnockbackCoroutine(Vector2 force, float duration) //waiting for duration so that positive x force doesnt get applied mid-air;
+    {
+        isKnockedBack = true;
+        rb.velocity = Vector2.zero;
+        rb.AddForce(force, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(duration);
+
+        isKnockedBack = false;
+    }
     #endregion
 }
