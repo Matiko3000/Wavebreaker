@@ -26,6 +26,7 @@ public class EnemyAI : MonoBehaviour
 
     Path path;
     int currentWaypoint = 0;
+    float lastDirection = 1f;
     Seeker seeker;
     Rigidbody2D rb;
 
@@ -40,7 +41,6 @@ public class EnemyAI : MonoBehaviour
     private void FixedUpdate()
     {
         if (TargetInDistance()) PathFollow();
-        if(rb.velocity.x > 0)Debug.Log(rb.velocity);
     }
 
     void UpdatePath()
@@ -56,25 +56,37 @@ public class EnemyAI : MonoBehaviour
         if (path == null) return;
 
         if (currentWaypoint >= path.vectorPath.Count) return;
-
+        
         //Calculate the direction
         float direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).x;
-        if (direction < 0)
+
+        // Determine if direction has changed significantly
+        if (Mathf.Abs(direction) > 0.1f)
         {
-            direction = -1;//Eliminates issues when enemy is above the player
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            direction = Mathf.Sign(direction);
         }
         else
         {
-            direction = 1;
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            direction = lastDirection;
         }
 
+        if (direction != lastDirection)//Rotate enemy
+        {
+            lastDirection = direction;
+            if (direction < 0)
+            {
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+        }
 
         float predictedDistanceY;
         if (path.vectorPath.Count > currentWaypoint + 2)
         {
-            predictedDistanceY = path.vectorPath[currentWaypoint + 2].y - (rb.position - new Vector2(0, RigidBodyCenterOffset)).y;
+            predictedDistanceY = path.vectorPath[currentWaypoint + 2].y - (rb.position - new Vector2(0, RigidBodyCenterOffset)).y;//make sure the path is going upwards
         }
         else predictedDistanceY = path.vectorPath[currentWaypoint].y - (rb.position - new Vector2(0, RigidBodyCenterOffset)).y;
 
@@ -83,7 +95,6 @@ public class EnemyAI : MonoBehaviour
         {
             if (predictedDistanceY > jumpNodeHeightRequirement)
             {
-                Debug.Log(predictedDistanceY);
                 rb.velocity += new Vector2(0f, jumpForce);
             }
         }
@@ -92,9 +103,6 @@ public class EnemyAI : MonoBehaviour
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
         if (distance < nextWaypointDistance) currentWaypoint++;
-
-        //if (rb.velocity.x > 0.2f) transform.rotation = Quaternion.Euler(0, 0, 0);//transform.localScale = new Vector3(-1f * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        //else if (rb.velocity.x < -0.2f) transform.rotation = Quaternion.Euler(0, 180, 0);//transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
     }
 
     private bool TargetInDistance()
