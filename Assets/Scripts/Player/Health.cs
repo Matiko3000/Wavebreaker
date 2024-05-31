@@ -34,6 +34,8 @@ public class Health : MonoBehaviour
         StartCoroutine(changeColors(sr.color, onDamageColor, colorDuration));
         player.ApplyKnockback();
 
+        Debug.Log(health);
+
         if (health <= 0) Die();
     }
 
