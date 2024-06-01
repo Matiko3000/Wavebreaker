@@ -2578,10 +2578,11 @@ MonoBehaviour:
   jumpNodeHeightRequirement: 1.2
   jumpEnabled: 1
   jumpForce: 8
-  jumpCheckOffset: 0
   RigidBodyCenterOffset: 0.05
   groundCheck: {fileID: 1013920130}
   jumpCheck: {fileID: 1013920132}
+  knockbackForce: {x: 2, y: 3.5}
+  knockbackDuration: 0.8
 --- !u!61 &1013920130
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2686,8 +2687,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dealDamageOnCollision: 1
   damage: 10
-  knockbackForce: {x: 2, y: 3.5}
-  knockbackDuration: 0.8
 --- !u!1 &1045593170
 GameObject:
   m_ObjectHideFlags: 0
@@ -3511,6 +3510,7 @@ GameObject:
   - component: {fileID: 1626368101}
   - component: {fileID: 1626368108}
   - component: {fileID: 1626368104}
+  - component: {fileID: 1626368109}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -3641,8 +3641,7 @@ MonoBehaviour:
   jumpForce: 17
   jumpAmount: 1
   fallingScale: 0.4
-  knockBackInterness: 0.5
-  knockbackForce: {x: 2, y: 4}
+  knockbackForce: {x: 4, y: 4}
   knockbackDuration: 0.25
 --- !u!212 &1626368105
 SpriteRenderer:
@@ -3777,8 +3776,23 @@ MonoBehaviour:
   MaxHealth: 50
   onDamageColor: {r: 0.7924528, g: 0.3999644, b: 0.3999644, a: 1}
   colorDuration: 0.2
+  isUsingAI: 0
   isAlive: 0
   health: 0
+--- !u!114 &1626368109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626368099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b67e22c54ba1604b8f38ae594217d08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackSlowRatio: 0.5
+  attackSlowDuration: 0.5
 --- !u!1 &1706847407
 GameObject:
   m_ObjectHideFlags: 0

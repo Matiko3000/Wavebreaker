@@ -24,6 +24,10 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] BoxCollider2D groundCheck;
     [SerializeField] BoxCollider2D jumpCheck;
 
+    [Header("Knockback")]
+    [SerializeField] Vector2 knockbackForce = new Vector2(2, 3.5f);
+    [SerializeField] float knockbackDuration = 0.8f;
+
     Path path;
     int currentWaypoint = 0;
     float lastDirection = 1f;
@@ -134,24 +138,21 @@ public class EnemyAI : MonoBehaviour
     #endregion
 
     #region knockback
-    //Taking care about knockback if enemy deals damage on collision
-    public float GetDirection()
+    //Taking care about knockback on the enemy
+    public void ApplyKnockbackEnemy()
     {
-        return (direction);
+        StartCoroutine(KnockbackCoroutine());
     }
 
-    public void ApplyKnockback(Vector2 force, float duration)
-    {
-        StartCoroutine(KnockbackCoroutine(force, duration));
-    }
-
-    private IEnumerator KnockbackCoroutine(Vector2 force, float duration) //waiting for duration so that positive x force doesnt get applied mid-air;
+    private IEnumerator KnockbackCoroutine() //waiting for duration so that positive x force doesnt get applied mid-air;
     {
         isKnockedBack = true;
         rb.velocity = Vector2.zero;
+
+        Vector2 force = new Vector2(-direction * knockbackForce.x, knockbackForce.y);//uses the negative direction so the enemy goes back
         rb.AddForce(force, ForceMode2D.Impulse);
 
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(knockbackDuration);
 
         isKnockedBack = false;
     }

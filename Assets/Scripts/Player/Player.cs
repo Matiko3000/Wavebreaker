@@ -32,8 +32,11 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        moveHorizontally();
-        moveVertically();
+        if (!isKnockedBack)
+        {
+            moveHorizontally();
+            moveVertically();
+        }   
     }
 
     #region moving
@@ -45,7 +48,8 @@ public class Player : MonoBehaviour
 
     void moveHorizontally()//physically move and animate
     {
-        if (!isKnockedBack) rb.velocity = new Vector2(input.x * moveSpeed, rb.velocity.y);
+        Debug.Log(Time.deltaTime);
+        rb.velocity = new Vector2(input.x * moveSpeed, rb.velocity.y);
 
         if (Mathf.Abs(input.x) > Mathf.Epsilon)
         {
@@ -92,20 +96,37 @@ public class Player : MonoBehaviour
 
     #endregion
     #region knockback
-    public void ApplyKnockback()
+    public void ApplyKnockbackPlayer(float direction)//Applies knockback for the player uses the direction(-1 or 1) so that enemy can pass in its local scale so it goes knock away from the player no matter which way the player is facing
     {
-        StartCoroutine(KnockbackCoroutine(new Vector2(knockbackForce.x * Mathf.Sign(rb.velocity.x), knockbackForce.y), knockbackDuration));//use Coroutine so that player cant fully counter the knockback
+        StartCoroutine(KnockbackCoroutine(new Vector2(knockbackForce.x * direction, knockbackForce.y), knockbackDuration));//use Coroutine so that player cant fully counter the knockback
     }
 
     private IEnumerator KnockbackCoroutine(Vector2 force, float duration) //waiting for duration so that positive x force doesnt get applied mid-air;
     {
         isKnockedBack = true;
+        Debug.Log(Mathf.Sign(rb.velocity.x) + " sign");
+        Debug.Log("gerbi");
         rb.velocity = Vector2.zero;
         rb.AddForce(force, ForceMode2D.Impulse);
 
         yield return new WaitForSeconds(duration);
 
         isKnockedBack = false;
+    }
+    #endregion
+    #region slow
+    public void SlowPlayer(float duration, float ratio)
+    {
+        StartCoroutine(Slow(duration, ratio));
+    }
+
+    private IEnumerator Slow(float duration, float ratio)
+    {
+        moveSpeed *= ratio;
+
+        yield return new WaitForSeconds(duration);
+
+        moveSpeed /= ratio;
     }
     #endregion
 }
