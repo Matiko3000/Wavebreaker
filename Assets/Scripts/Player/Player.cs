@@ -22,21 +22,21 @@ public class Player : MonoBehaviour
     BoxCollider2D groundCheck;
     Rigidbody2D rb;
     Animator animator;
+    Health health;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         groundCheck = GetComponent<BoxCollider2D>();
+        health = GetComponent<Health>();
     }
 
     void FixedUpdate()
     {
-        if (!isKnockedBack)
-        {
-            moveHorizontally();
-            moveVertically();
-        }   
+        if (isKnockedBack || !health.isAlive) return;//disable moving when player is dead or in knockback animation
+        moveHorizontally();
+        moveVertically();
     }
 
     #region moving
@@ -105,12 +105,12 @@ public class Player : MonoBehaviour
     {
         isKnockedBack = true;
         Debug.Log(Mathf.Sign(rb.velocity.x) + " sign");
-        Debug.Log("gerbi");
         rb.velocity = Vector2.zero;
         rb.AddForce(force, ForceMode2D.Impulse);
 
         yield return new WaitForSeconds(duration);
 
+        rb.velocity = Vector2.zero;
         isKnockedBack = false;
     }
     #endregion

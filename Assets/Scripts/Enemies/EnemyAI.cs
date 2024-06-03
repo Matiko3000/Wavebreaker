@@ -35,20 +35,25 @@ public class EnemyAI : MonoBehaviour
     Seeker seeker;
     Rigidbody2D rb;
     Health playerHealth;
+    Health enemyHealth;
+
     bool isKnockedBack = false;
 
     private void Awake()
     {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
+        enemyHealth = GetComponent<Health>();
+
         playerHealth = target.GetComponent<Health>();
+
 
         InvokeRepeating("UpdatePath", 0f, pathUpdateSeconds);
     }
 
     private void FixedUpdate()
     {
-        if (!isKnockedBack)//making sure the knockback works properly
+        if (!isKnockedBack && enemyHealth.isAlive)//making sure the knockback works properly
         {
             if (TargetInDistance() && playerHealth.isAlive) PathFollow();
             else rb.velocity = new Vector3(0, rb.velocity.y, 0);//stop enemy if player not in range or dead
@@ -154,6 +159,7 @@ public class EnemyAI : MonoBehaviour
 
         yield return new WaitForSeconds(knockbackDuration);
 
+        rb.velocity = Vector2.zero;
         isKnockedBack = false;
     }
     #endregion
