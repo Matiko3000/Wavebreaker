@@ -54,9 +54,9 @@ public class PlayerCombat : MonoBehaviour
         foreach (Collider2D enemyCollider in hitEnemies)
         {
             GameObject enemy = enemyCollider.gameObject;
+            if (enemyCollider.isTrigger == true) continue;
             if (uniqueEnemies.Add(enemy)) // HashSet.Add returns false if the item was already in the set
             {
-                Debug.Log(enemy.name);
                 enemy.GetComponent<Health>().takeDamage(baseDamage);
             }
         }

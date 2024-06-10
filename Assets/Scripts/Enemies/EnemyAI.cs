@@ -20,6 +20,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] float jumpNodeHeightRequirement = 1f;
     [SerializeField] bool jumpEnabled;
     [SerializeField] float jumpForce = 0.3f;
+    [SerializeField] float jumpXAxisForce = 0f;
     [SerializeField] float RigidBodyCenterOffset = 0.05f;
     [SerializeField] BoxCollider2D groundCheck;
     [SerializeField] BoxCollider2D jumpCheck;
@@ -96,7 +97,7 @@ public class EnemyAI : MonoBehaviour
         direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).x;
 
         // Determine if direction has changed significantly
-        if (Mathf.Abs(direction) > 0.1f)
+        if (Mathf.Abs(direction) > 0.3f)
         {
             direction = Mathf.Sign(direction);
         }
@@ -119,9 +120,9 @@ public class EnemyAI : MonoBehaviour
         }
 
         float predictedDistanceY;
-        if (path.vectorPath.Count > currentWaypoint + 2)
+        if (path.vectorPath.Count > currentWaypoint + 1)
         {
-            predictedDistanceY = path.vectorPath[currentWaypoint + 2].y - (rb.position - new Vector2(0, RigidBodyCenterOffset)).y;//make sure the path is going upwards
+            predictedDistanceY = path.vectorPath[currentWaypoint + 1].y - (rb.position - new Vector2(0, RigidBodyCenterOffset)).y;//make sure the path is going upwards
         }
         else predictedDistanceY = path.vectorPath[currentWaypoint].y - (rb.position - new Vector2(0, RigidBodyCenterOffset)).y;
 
@@ -134,7 +135,8 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        rb.velocity = new Vector2((direction * speed * Time.deltaTime), rb.velocity.y);
+        if (groundCheck.IsTouchingLayers(LayerMask.GetMask("Ground"))) rb.velocity = new Vector2((direction * speed * Time.deltaTime), rb.velocity.y);
+        else rb.velocity = new Vector2((direction * jumpXAxisForce * speed * Time.deltaTime), rb.velocity.y);
 
         //update next waypoint
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);

@@ -48,7 +48,6 @@ public class Player : MonoBehaviour
 
     void moveHorizontally()//physically move and animate
     {
-        Debug.Log(Time.deltaTime);
         rb.velocity = new Vector2(input.x * moveSpeed, rb.velocity.y);
 
         if (Mathf.Abs(input.x) > Mathf.Epsilon)
@@ -65,6 +64,7 @@ public class Player : MonoBehaviour
 
     void OnJump(InputValue value) //check if player should be able to jump
     {
+        if (isKnockedBack || !health.isAlive) return;
         if (currentJumps < jumpAmount)
         {
             currentJumps++;
@@ -104,7 +104,6 @@ public class Player : MonoBehaviour
     private IEnumerator KnockbackCoroutine(Vector2 force, float duration) //waiting for duration so that positive x force doesnt get applied mid-air;
     {
         isKnockedBack = true;
-        Debug.Log(Mathf.Sign(rb.velocity.x) + " sign");
         rb.velocity = Vector2.zero;
         rb.AddForce(force, ForceMode2D.Impulse);
 
