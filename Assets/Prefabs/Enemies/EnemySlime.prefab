@@ -138,7 +138,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8191813786336204423}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.41, y: -0.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -162,7 +162,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 6c1cd3e8c0be09347a68d0f85d6b7172, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -182,7 +182,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 8191813786336204423}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 6c1cd3e8c0be09347a68d0f85d6b7172, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -240,7 +240,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.024075449, y: -0.28087264}
+  m_Offset: {x: 0.0013464987, y: -0.28087264}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -251,7 +251,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6629436, y: 0.08511709}
+  m_Size: {x: 0.40643173, y: 0.0851171}
   m_EdgeRadius: 0
 --- !u!61 &2619297911235072324
 BoxCollider2D:
@@ -285,7 +285,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.8857261, y: 0.8179655}
+  m_Offset: {x: 2.0087876, y: 0.8179655}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -296,7 +296,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.07968038, y: 2.0047994}
+  m_Size: {x: 1.8503466, y: 2.0047994}
   m_EdgeRadius: 0
 --- !u!114 &4986516864313120663
 MonoBehaviour:
@@ -313,11 +313,12 @@ MonoBehaviour:
   target: {fileID: 0}
   activateDistance: 50
   pathUpdateSeconds: 0.3
-  speed: 30
+  speed: 40
   nextWaypointDistance: 0.5
-  jumpNodeHeightRequirement: 1.2
+  jumpNodeHeightRequirement: 0.8
   jumpEnabled: 1
   jumpForce: 8
+  jumpXAxisForce: 3.4
   RigidBodyCenterOffset: 0.05
   groundCheck: {fileID: 2503993685663480050}
   jumpCheck: {fileID: 2619297911235072324}

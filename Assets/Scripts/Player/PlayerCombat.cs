@@ -30,6 +30,7 @@ public class PlayerCombat : MonoBehaviour
         player = GetComponent<Player>();
     }
 
+    #region attacking
     void OnAttack(InputValue value)
     {
         if (Time.time < nextAttackTime) return;
@@ -61,6 +62,7 @@ public class PlayerCombat : MonoBehaviour
             }
         }
     }
+    #endregion
 
     //draw the range in editor
     private void OnDrawGizmosSelected()

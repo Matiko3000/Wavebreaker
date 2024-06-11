@@ -6,6 +6,7 @@ using UnityEngine.WSA;
 using UnityEditor;
 using Cinemachine.Utility;
 using System;
+using UnityEngine.Windows;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] GameObject target;
     [SerializeField] float activateDistance = 50f;
     [SerializeField] float pathUpdateSeconds = 0.5f;
+    [SerializeField] int pathPredictScale = 4;//can stop working if too high
 
     [Header("Physics")]
     [SerializeField] float speed = 10f;
@@ -37,6 +39,7 @@ public class EnemyAI : MonoBehaviour
     Rigidbody2D rb;
     Health playerHealth;
     Health enemyHealth;
+    Animator animator;
 
     bool isKnockedBack = false;
 
@@ -45,7 +48,9 @@ public class EnemyAI : MonoBehaviour
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         enemyHealth = GetComponent<Health>();
+        animator = GetComponentInChildren<Animator>();
 
+        if (target == null) target = FindObjectOfType<PlayerCombat>().gameObject;
         playerHealth = target.GetComponent<Health>();
 
 
@@ -59,6 +64,7 @@ public class EnemyAI : MonoBehaviour
             if (TargetInDistance() && playerHealth.isAlive) PathFollow();
             else rb.velocity = new Vector3(0, rb.velocity.y, 0);//stop enemy if player not in range or dead
         }
+        Animate();
     }
 
     #region SettingPath
@@ -97,7 +103,7 @@ public class EnemyAI : MonoBehaviour
         direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).x;
 
         // Determine if direction has changed significantly
-        if (Mathf.Abs(direction) > 0.3f)
+        if (Mathf.Abs(direction) > 0.4f)
         {
             direction = Mathf.Sign(direction);
         }
@@ -120,19 +126,25 @@ public class EnemyAI : MonoBehaviour
         }
 
         float predictedDistanceY;
-        if (path.vectorPath.Count > currentWaypoint + 1)
+        if (path.vectorPath.Count > currentWaypoint + pathPredictScale)
         {
-            predictedDistanceY = path.vectorPath[currentWaypoint + 1].y - (rb.position - new Vector2(0, RigidBodyCenterOffset)).y;//make sure the path is going upwards
+            predictedDistanceY = path.vectorPath[currentWaypoint + pathPredictScale].y - (rb.position - new Vector2(0, RigidBodyCenterOffset)).y;//make sure the path is going upwards
         }
         else predictedDistanceY = path.vectorPath[currentWaypoint].y - (rb.position - new Vector2(0, RigidBodyCenterOffset)).y;
 
+        Debug.Log(jumpEnabled + " jump enabled " + groundCheck.IsTouchingLayers(LayerMask.GetMask("Ground")) + " groundCheck " + jumpCheck.IsTouchingLayers(LayerMask.GetMask("Ground")) + " jumpCheck");
+
         //check if enemy should jump now
-        if (jumpEnabled && groundCheck.IsTouchingLayers(LayerMask.GetMask("Ground")) && jumpCheck.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        //1: check if jump enabled 2:check if enemy is on the ground 3: check if there is any obstacle next to enemy to jump on
+        if (jumpEnabled && 
+            (groundCheck.IsTouchingLayers(LayerMask.GetMask("Ground"))
+            && jumpCheck.IsTouchingLayers(LayerMask.GetMask("Ground")) 
+            && predictedDistanceY > jumpNodeHeightRequirement))
         {
-            if (predictedDistanceY > jumpNodeHeightRequirement)
-            {
-                rb.velocity += new Vector2(0f, jumpForce);
-            }
+            Debug.Log("Jump conditions met");
+            Debug.Log(Time.deltaTime + " Time.deltaTime");
+            Debug.Log(predictedDistanceY + " predictedDistanceY");
+            rb.velocity += new Vector2(0f, jumpForce);
         }
 
         if (groundCheck.IsTouchingLayers(LayerMask.GetMask("Ground"))) rb.velocity = new Vector2((direction * speed * Time.deltaTime), rb.velocity.y);
@@ -163,6 +175,19 @@ public class EnemyAI : MonoBehaviour
 
         rb.velocity = Vector2.zero;
         isKnockedBack = false;
+    }
+    #endregion
+
+    #region animations
+
+    void Animate()
+    {
+        if (rb.velocity.y > 0.1) { animator.SetFloat("velocity.y", 1); animator.SetBool("isJumping", true); }
+        else if (rb.velocity.y < -0.1) { animator.SetFloat("velocity.y", -1); animator.SetBool("isJumping", true); }
+        else { animator.SetFloat("velocity.y", 0); animator.SetBool("isJumping", false); }
+
+        if (Mathf.Abs(rb.velocity.x) > 0.1) animator.SetBool("isRunning", true);
+        else animator.SetBool("isRunning", false);
     }
     #endregion
 }

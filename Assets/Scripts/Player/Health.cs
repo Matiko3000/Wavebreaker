@@ -77,10 +77,12 @@ public class Health : MonoBehaviour
 
     IEnumerator Die()
     {
-        Debug.Log("penis"+ gameObject.name);
         isAlive = false;
         //if (mainCollider != null) mainCollider.enabled = false;//disable the collider ///QUESTIONABLE IF WORTH USING
+        animator.SetFloat("velocity.y", 0); //make sure the animation play properly
         animator.SetTrigger("die");
+        
+        mainCollider.sharedMaterial = null;
 
         yield return new WaitForSeconds(destoryOnDeathDelay);//wait for the animation to play out
 
