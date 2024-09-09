@@ -13,6 +13,7 @@ public class EnemyAI : MonoBehaviour
     [Header("Pathfinding")]
     [SerializeField] GameObject target;
     [SerializeField] float activateDistance = 50f;
+    [SerializeField] float deactivateDistance = 0.6f;
     [SerializeField] float pathUpdateSeconds = 0.5f;
     [SerializeField] int pathPredictScale = 4;//can stop working if too high
 
@@ -63,8 +64,8 @@ public class EnemyAI : MonoBehaviour
         {
             if (TargetInDistance() && playerHealth.isAlive) PathFollow();
             else rb.velocity = new Vector3(0, rb.velocity.y, 0);//stop enemy if player not in range or dead
+            Animate();
         }
-        Animate();
     }
 
     #region SettingPath
@@ -79,7 +80,7 @@ public class EnemyAI : MonoBehaviour
     private bool TargetInDistance()
     {
         if (target == null) return false;
-        return (Vector2.Distance(transform.position, target.transform.position) < activateDistance);
+        return (Vector2.Distance(transform.position, target.transform.position) < activateDistance && Vector2.Distance(transform.position, target.transform.position) > deactivateDistance);
     }
 
     private void OnPathComplete(Path p)
@@ -135,7 +136,7 @@ public class EnemyAI : MonoBehaviour
         Debug.Log(jumpEnabled + " jump enabled " + groundCheck.IsTouchingLayers(LayerMask.GetMask("Ground")) + " groundCheck " + jumpCheck.IsTouchingLayers(LayerMask.GetMask("Ground")) + " jumpCheck");
 
         //check if enemy should jump now
-        //1: check if jump enabled 2:check if enemy is on the ground 3: check if there is any obstacle next to enemy to jump on
+        //1: check if jump enabled 2:check if enemy is on the ground 3: check if there is any obstacle next to enemy to jump on 4: check if it really needs to jump
         if (jumpEnabled && 
             (groundCheck.IsTouchingLayers(LayerMask.GetMask("Ground"))
             && jumpCheck.IsTouchingLayers(LayerMask.GetMask("Ground")) 
@@ -148,7 +149,7 @@ public class EnemyAI : MonoBehaviour
         }
 
         if (groundCheck.IsTouchingLayers(LayerMask.GetMask("Ground"))) rb.velocity = new Vector2((direction * speed * Time.deltaTime), rb.velocity.y);
-        else rb.velocity = new Vector2((direction * jumpXAxisForce * speed * Time.deltaTime), rb.velocity.y);
+        else rb.velocity = new Vector2((direction * jumpXAxisForce * speed * Time.deltaTime), rb.velocity.y);//some enemies need more X axis force to be able to jump on things because they are too slow
 
         //update next waypoint
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
@@ -188,6 +189,13 @@ public class EnemyAI : MonoBehaviour
 
         if (Mathf.Abs(rb.velocity.x) > 0.1) animator.SetBool("isRunning", true);
         else animator.SetBool("isRunning", false);
+    }
+    #endregion
+
+    #region getters
+    public float getDirection()
+    {
+        return direction;
     }
     #endregion
 }

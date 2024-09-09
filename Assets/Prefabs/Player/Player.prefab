@@ -287,8 +287,8 @@ MonoBehaviour:
   jumpForce: 17
   jumpAmount: 1
   fallingScale: 0.4
-  knockbackForce: {x: 4, y: 4}
-  knockbackDuration: 0.3
+  knockbackForce: {x: 2, y: 5}
+  knockbackDuration: 0.4
 --- !u!114 &8654472889411161514
 MonoBehaviour:
   m_ObjectHideFlags: 0

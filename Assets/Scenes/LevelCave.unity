@@ -220,11 +220,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6536053813589912935, guid: 8a6bacc97442b114484cf5b4145576dc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.25
+      value: -7.53
       objectReference: {fileID: 0}
     - target: {fileID: 6536053813589912935, guid: 8a6bacc97442b114484cf5b4145576dc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.5461602
+      value: -2.34384
       objectReference: {fileID: 0}
     - target: {fileID: 6536053813589912935, guid: 8a6bacc97442b114484cf5b4145576dc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -615,6 +615,7 @@ GameObject:
   - component: {fileID: 278001538}
   - component: {fileID: 278001537}
   - component: {fileID: 278001536}
+  - component: {fileID: 278001543}
   m_Layer: 8
   m_Name: EnemySkeleton
   m_TagString: Untagged
@@ -631,11 +632,12 @@ Transform:
   m_GameObject: {fileID: 278001534}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.92, y: 2.32, z: -1.5486248}
+  m_LocalPosition: {x: -11.95, y: -3.19, z: -1.5486248}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 643759619}
+  - {fileID: 2072758289}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &278001536
@@ -700,6 +702,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   activateDistance: 50
+  deactivateDistance: 1
   pathUpdateSeconds: 0.3
   pathPredictScale: 4
   speed: 80
@@ -865,6 +868,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &278001543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278001534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d7d8a93097b0f40af717f8ca959884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseDamage: 20
+  attackRate: 1.5
+  attackRange: 0.5
+  attackPoint: {fileID: 2072758289}
+  damageDelay: 0.2
 --- !u!1 &315538273
 GameObject:
   m_ObjectHideFlags: 0
@@ -1802,11 +1822,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 349695856798959651, guid: 7bccc6e4d6cf57345adae774658ef9cf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.25
+      value: -7.53
       objectReference: {fileID: 0}
     - target: {fileID: 349695856798959651, guid: 7bccc6e4d6cf57345adae774658ef9cf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.25
+      value: -3.64
       objectReference: {fileID: 0}
     - target: {fileID: 349695856798959651, guid: 7bccc6e4d6cf57345adae774658ef9cf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2772,11 +2792,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6816481004587829450, guid: d1fef1d4792de04439577653f63c024e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.25
+      value: -7.53
       objectReference: {fileID: 0}
     - target: {fileID: 6816481004587829450, guid: d1fef1d4792de04439577653f63c024e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.5461602
+      value: -2.34384
       objectReference: {fileID: 0}
     - target: {fileID: 6816481004587829450, guid: d1fef1d4792de04439577653f63c024e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12787,6 +12807,37 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &2072758288
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2072758289}
+  m_Layer: 8
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2072758289
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072758288}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.61, y: 0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 278001535}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2084196770
 GameObject:
   m_ObjectHideFlags: 0

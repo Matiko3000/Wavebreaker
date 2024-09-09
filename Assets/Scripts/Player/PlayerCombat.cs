@@ -23,7 +23,6 @@ public class PlayerCombat : MonoBehaviour
     float nextAttackTime = 0f;
 
 
-
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -45,7 +44,7 @@ public class PlayerCombat : MonoBehaviour
         player.SlowPlayer(attackSlowDuration, attackSlowRatio);
 
         yield return new WaitForSeconds(damageDelay);//wait for the animation so the attack looks natural
-        //detect enemies in range
+                                                     //detect enemies in range
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, LayerMask.GetMask("Enemy"));
 
         // Create a set to store unique enemies
@@ -70,4 +69,5 @@ public class PlayerCombat : MonoBehaviour
         if (attackPoint == null) return;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
+
 }
