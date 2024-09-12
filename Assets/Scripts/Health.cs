@@ -46,6 +46,7 @@ public class Health : MonoBehaviour
     #region takingDamage
     public void takeDamage(int damage, float kbDirection)//if used for player, overload with direction !!!
     {
+        if(!isAlive) return;
         health -= damage;
         if (changingColors == null) changingColors = StartCoroutine(changeColors(sr.color, onDamageColor, colorDuration));
         player.ApplyKnockbackPlayer(kbDirection);
@@ -81,7 +82,7 @@ public class Health : MonoBehaviour
         //if (mainCollider != null) mainCollider.enabled = false;//disable the collider ///QUESTIONABLE IF WORTH USING
         animator.SetFloat("velocity.y", 0); //make sure the animation play properly
         animator.SetTrigger("die");
-        
+
         mainCollider.sharedMaterial = null;
 
         yield return new WaitForSeconds(destoryOnDeathDelay);//wait for the animation to play out
